@@ -1,9 +1,9 @@
 """
 Integration Tests: All Phases 8-13
 
-Test the complete AGI pipeline end-to-end:
-Input (Phase 8) → Learning (Phase 11) → Reasoning (Phase 12) 
-→ Execution (Phase 9) → Storage (Phase 10) → Wisdom (Phase 13)
+Test the complete Memory System pipeline end-to-end:
+Input (Memory Layer) → Learning (Memory Layer) → Reasoning (Memory Layer) 
+→ Execution (Memory Layer) → Storage (Memory Layer) → Wisdom (Memory Layer)
 
 Target: >90% success rate on all integration flows
 """
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestIntegrationAllPhases:
-    """Test complete AGI pipeline — pytest-compatible"""
+    """Test complete Memory System pipeline — pytest-compatible"""
 
     def log_test(self, phase: str, test_name: str, passed: bool, duration: float):
         """Log test result"""
@@ -358,7 +358,7 @@ class TestIntegrationAllPhases:
     # ─── INTEGRATION TESTS ───
 
     async def test_integration_multimodal_to_learning(self):
-        """Integration: Phase 8 → Phase 11"""
+        """Integration: Memory Layer → Memory Layer"""
         start = time.time()
         try:
             # Extract features from multimodal input
@@ -384,16 +384,16 @@ class TestIntegrationAllPhases:
         """Integration: Complete pipeline 8→11→12→9→10"""
         start = time.time()
         try:
-            # Phase 8: Multimodal input
+            # Memory Layer: Multimodal input
             text = "action increases outcome"
             
-            # Phase 11: Learn rules
+            # Memory Layer: Learn rules
             ml_engine = MetaLearningEngine()
             X = np.array([[1, 2], [2, 4], [3, 6]])
             y = np.array([0, 1, 1])
             ml_engine.fit(X, y)
             
-            # Phase 12: Causal reasoning
+            # Memory Layer: Causal reasoning
             causal_engine = CausalReasoningEngine()
             observations = [
                 ({"action": 1, "outcome": 2}, 0.5),
@@ -401,12 +401,12 @@ class TestIntegrationAllPhases:
             ]
             causal_engine.learn_from_observations(observations)
             
-            # Phase 9: Execute decisions
+            # Memory Layer: Execute decisions
             exec_engine = DistributedExecutionEngine()
             exec_engine.schedule("predict", lambda: ml_engine.predict([[2, 4]]))
             exec_results = await exec_engine.run()
             
-            # Phase 10: Store results
+            # Memory Layer: Store results
             storage_engine = VectorGraphScaleEngine()
             emb = np.random.rand(768)
             storage_engine.store_knowledge("result", emb, {"pipeline": "complete"})

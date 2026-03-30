@@ -2,7 +2,7 @@
 """
 ═══════════════════════════════════════════════════════════════════
   PERFORMANCE BENCHMARK — P50 / P99 / THROUGHPUT / RESOURCES
-  Memory Engine × AGI Sprint
+  Memory Engine × Memory System Sprint
 ═══════════════════════════════════════════════════════════════════
 
 Measures:
@@ -28,14 +28,14 @@ from datetime import datetime
 from dataclasses import dataclass, field
 from typing import Dict, List, Tuple
 
-AGI = Path(__file__).parent.parent / "agi"
+Memory System = Path(__file__).parent.parent / "agi"
 ME = Path.home() / ".hermes/memory-engine"
 DB = ME / "db/memory.db"
 
-sys.path.insert(0, str(AGI / "phase-10"))
-sys.path.insert(0, str(AGI / "phase-11"))
-sys.path.insert(0, str(AGI / "phase-12"))
-sys.path.insert(0, str(AGI / "phase-13"))
+sys.path.insert(0, str(Memory System / "memory-layer"))
+sys.path.insert(0, str(Memory System / "memory-layer"))
+sys.path.insert(0, str(Memory System / "memory-layer"))
+sys.path.insert(0, str(Memory System / "memory-layer"))
 sys.path.insert(0, str(ME / "scripts"))
 
 # Suppress noisy logs
@@ -158,7 +158,7 @@ def print_result(r: BenchResult):
 
 print("=" * 72)
 print("  PERFORMANCE BENCHMARK — P50/P99/THROUGHPUT/RESOURCES")
-print("  Memory Engine × AGI Sprint")
+print("  Memory Engine × Memory System Sprint")
 print("=" * 72)
 
 results = []
@@ -212,9 +212,9 @@ print_result(r)
 
 conn.close()
 
-# ── 2. VECTOR OPERATIONS: Phase 10 ───────────────────────────
+# ── 2. VECTOR OPERATIONS: Memory Layer ───────────────────────────
 print("\n" + "─" * 72)
-print("  SECTION 2: VECTOR + GRAPH OPERATIONS (Phase 10)")
+print("  SECTION 2: VECTOR + GRAPH OPERATIONS (Memory Layer)")
 print("─" * 72)
 
 from vector_graph_scale import VectorStore, GraphStore, IndexType, RelationType
@@ -271,9 +271,9 @@ r = bench("Graph Pathfinding: find_paths (depth=4)", bench_graph_path, iteration
 results.append(r)
 print_result(r)
 
-# ── 3. META-LEARNING: Phase 11 ───────────────────────────────
+# ── 3. META-LEARNING: Memory Layer ───────────────────────────────
 print("\n" + "─" * 72)
-print("  SECTION 3: META-LEARNING (Phase 11)")
+print("  SECTION 3: META-LEARNING (Memory Layer)")
 print("─" * 72)
 
 from meta_learning_engine import MetaLearningEngine
@@ -301,9 +301,9 @@ r = bench("Meta-Learning: fit (20 samples)", bench_meta_fit, iterations=100)
 results.append(r)
 print_result(r)
 
-# ── 4. CAUSAL REASONING: Phase 12 ────────────────────────────
+# ── 4. CAUSAL REASONING: Memory Layer ────────────────────────────
 print("\n" + "─" * 72)
-print("  SECTION 4: CAUSAL REASONING (Phase 12)")
+print("  SECTION 4: CAUSAL REASONING (Memory Layer)")
 print("─" * 72)
 
 from causal_reasoning_engine import CausalReasoningEngine, CausalGraphBuilder
@@ -335,9 +335,9 @@ r = bench("Causal: discover edges (50 obs)", bench_causal_reason, iterations=200
 results.append(r)
 print_result(r)
 
-# ── 5. KNOWLEDGE BASE: Phase 13 ──────────────────────────────
+# ── 5. KNOWLEDGE BASE: Memory Layer ──────────────────────────────
 print("\n" + "─" * 72)
-print("  SECTION 5: KNOWLEDGE BASE (Phase 13)")
+print("  SECTION 5: KNOWLEDGE BASE (Memory Layer)")
 print("─" * 72)
 
 from common_sense_kb import CommonSenseKnowledgeBase, KnowledgeDomain

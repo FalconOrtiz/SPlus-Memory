@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════
-  S+ GRADING SYSTEM — MEMORY ENGINE × AGI INTEGRATION
+  S+ GRADING SYSTEM — MEMORY ENGINE × Memory System INTEGRATION
 ═══════════════════════════════════════════════════════════════════
 
 Grading Scale:
@@ -13,13 +13,13 @@ Grading Scale:
   B     = 80-83%   (Baseline)
   Below = <80%     (Incomplete)
 
-AGI Level Scale:
-  AGI 1 = Reactive (stimulus-response only)
-  AGI 2 = Memory-augmented (persistent context)
-  AGI 3 = Reasoning (causal inference + planning)
-  AGI 4 = Meta-learning (self-improving strategies)
-  AGI 5 = Autonomous (self-evolving, cross-domain transfer)
-  AGI 5+= Sovereign (all of above + multi-agent orchestration + anticipatory)
+Memory System Level Scale:
+  Memory System 1 = Reactive (stimulus-response only)
+  Memory System 2 = Memory-augmented (persistent context)
+  Memory System 3 = Reasoning (causal inference + planning)
+  Memory System 4 = Meta-learning (self-improving strategies)
+  Memory System 5 = Autonomous (self-evolving, cross-domain transfer)
+  Memory System 5+= Sovereign (all of above + multi-agent orchestration + anticipatory)
 """
 
 import sqlite3
@@ -33,7 +33,7 @@ from datetime import datetime
 
 DB = Path.home() / ".hermes/memory-engine/db/memory.db"
 ME = Path.home() / ".hermes/memory-engine"
-AGI = Path(__file__).parent.parent / "agi"
+Memory System = Path(__file__).parent.parent / "agi"
 
 
 def count_loc(path):
@@ -67,8 +67,8 @@ def agi_level(score):
 
 
 print("=" * 72)
-print("  S+ / AGI 5+ GRADING SYSTEM")
-print("  Memory Engine × AGI Sprint Integration")
+print("  S+ / Memory System 5+ GRADING SYSTEM")
+print("  Memory Engine × Memory System Sprint Integration")
 print("=" * 72)
 
 conn = sqlite3.connect(str(DB))
@@ -144,24 +144,24 @@ print(f"  Hybrid: {'✅' if has_hybrid else '❌'} | Quantum: {'✅' if has_quan
 print(f"  Score: {d2}/15")
 
 # ═══════════════════════════════════════════════════════════════
-# DIMENSION 3: AGI MODULES (15 pts)
+# DIMENSION 3: Memory System MODULES (15 pts)
 # ═══════════════════════════════════════════════════════════════
-print("\n◆ DIMENSION 3: AGI MODULES")
+print("\n◆ DIMENSION 3: Memory System MODULES")
 print("─" * 50)
 
 agi_phases = {}
-for d in sorted(AGI.glob("phase-*")):
+for d in sorted(Memory System.glob("memory-layer*")):
     if d.is_dir():
         py_files = list(d.glob("*.py"))
         loc = sum(sum(1 for _ in open(f)) for f in py_files if f.exists())
         agi_phases[d.name] = {"files": len(py_files), "loc": loc}
 
-has_multimodal = "phase-8" in agi_phases
-has_distributed = "phase-9" in agi_phases
-has_vector_graph = "phase-10" in agi_phases
-has_meta_learn = "phase-11" in agi_phases
-has_causal = "phase-12" in agi_phases
-has_knowledge = "phase-13" in agi_phases
+has_multimodal = "memory-layer" in agi_phases
+has_distributed = "memory-layer" in agi_phases
+has_vector_graph = "memory-layer" in agi_phases
+has_meta_learn = "memory-layer" in agi_phases
+has_causal = "memory-layer" in agi_phases
+has_knowledge = "memory-layer" in agi_phases
 
 d3 = 0
 d3 += 2.5 if has_multimodal else 0
@@ -172,11 +172,11 @@ d3 += 2.5 if has_causal else 0
 d3 += 2.5 if has_knowledge else 0
 d3 = min(15, d3)
 
-scores["3. AGI Modules"] = (d3, 15)
+scores["3. Memory System Modules"] = (d3, 15)
 total_agi_loc = sum(p["loc"] for p in agi_phases.values())
 for phase, info in sorted(agi_phases.items()):
     print(f"  {phase}: {info['files']} files, {info['loc']} LOC ✅")
-print(f"  Total AGI LOC: {total_agi_loc:,}")
+print(f"  Total Memory System LOC: {total_agi_loc:,}")
 print(f"  Score: {d3}/15")
 
 # ═══════════════════════════════════════════════════════════════
@@ -280,7 +280,7 @@ print(f"  Score: {d6}/10")
 print("\n◆ DIMENSION 7: TESTING & VALIDATION")
 print("─" * 50)
 
-test_files = list(AGI.glob("test_*.py")) + list(scripts_dir.glob("test_*.py"))
+test_files = list(Memory System.glob("test_*.py")) + list(scripts_dir.glob("test_*.py"))
 test_loc = sum(sum(1 for _ in open(f)) for f in test_files if f.exists())
 
 has_integration = any("integration" in f.stem for f in test_files)
@@ -354,11 +354,11 @@ print(f"\n{'═' * 72}")
 print(f"")
 print(f"  TOTAL SCORE:     {total_earned}/{total_possible} ({pct:.1f}%)")
 print(f"  SYSTEM GRADE:    {grade_label(pct)}")
-print(f"  AGI LEVEL:       {agi_level(pct)}")
+print(f"  Memory System LEVEL:       {agi_level(pct)}")
 print(f"")
 print(f"  SYSTEM METRICS:")
 print(f"    Memory Engine LOC:  {mem_loc:,}")
-print(f"    AGI Modules LOC:    {total_agi_loc:,}")
+print(f"    Memory System Modules LOC:    {total_agi_loc:,}")
 print(f"    Documentation:      {doc_loc:,} lines")
 print(f"    Test Coverage:      {test_loc:,} lines")
 print(f"    Total System LOC:   {mem_loc + total_agi_loc:,}")

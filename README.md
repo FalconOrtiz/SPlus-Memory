@@ -2,7 +2,7 @@
 
 **Layered semantic memory system for AI agents.**
 
-S+Memory gives any AI agent persistent, semantic, self-evolving memory. It works with OpenClaw, Hermes, and any agentic system or training pipeline that needs durable context across sessions.
+S+Memory gives any AI agent persistent, semantic, self-evolving memory. Works with Hermes, and any agentic system or training pipeline that needs durable context across sessions.
 
 ## What it does
 
@@ -45,9 +45,8 @@ git clone https://github.com/FalconOrtiz/SPlus-Memory.git
 cd SPlus-Memory
 pip install fastembed
 
-# Initialize the database
-python scripts/init_memory_engine.sh
-# Or just run any command — DB auto-creates on first use
+# Initialize (DB auto-creates on first use)
+python scripts/mem stats
 
 # Store a fact
 python scripts/mem store "The API runs on port 3100"
@@ -95,12 +94,6 @@ Options: `--source NAME`, `--confidence 0.9`, `--top 5`
 - `evolution_engine.py` — tracks system evolution over time
 - `surface_buffer` table — hot facts ready for agent consumption
 
-### Intelligence layer (AGI modules)
-- Phase 10: Vector + Graph storage (10M vectors, sub-100ms)
-- Phase 11: Meta-learning (adaptive retrieval strategy selection)
-- Phase 12: Causal reasoning (pattern detection from access logs)
-- Phase 13: Common-sense knowledge base (cross-domain transfer)
-
 ### Multi-agent layer
 - `multi_agent_orchestrator.py` — coordinate memory across agents
 - `agent_sync.py` — sync facts between agent instances
@@ -109,25 +102,21 @@ Options: `--source NAME`, `--confidence 0.9`, `--top 5`
 
 ## Performance
 
-Benchmarked on macOS (Apple Silicon):
+Benchmarked on Apple Silicon:
 
 | Operation | p50 | p99 | Throughput |
 |-----------|-----|-----|------------|
 | DB Read (10 rows) | 0.013ms | 0.020ms | 74,703 ops/s |
 | Vector Search (384d, top-10) | 0.395ms | 0.422ms | 2,521 ops/s |
 | Graph Traverse | 0.002ms | 0.003ms | 413,351 ops/s |
-| Full Pipeline (search+graph+meta+KB) | 0.873ms | 0.918ms | 1,146 ops/s |
-| Full Pipeline + DB I/O | 1.082ms | 1.139ms | 928 ops/s |
+| Full Pipeline (search+graph+meta) | 0.873ms | 0.918ms | 1,146 ops/s |
 
 All operations under 100ms p99. Full end-to-end pipeline: **~1ms**.
 
 ## Integration
 
 ### With Hermes
-S+Memory was built for Hermes. Drop the `scripts/` directory into `~/.hermes/memory-engine/scripts/` and it works.
-
-### With OpenClaw
-Use `paperclip_bridge.py` and `paperclip_tenant_bridge.py` for company-scoped memory in OpenClaw/Paperclip.
+S+Memory was built for Hermes. Drop the `scripts/` directory into `~/.hermes/memory-engine/scripts/` and it works. A PR to add it as an official optional skill is open at [NousResearch/hermes-agent#4056](https://github.com/NousResearch/hermes-agent/pull/4056).
 
 ### With any agent
 ```python
@@ -146,31 +135,12 @@ sys.path.insert(0, "path/to/SPlus-Memory/scripts")
 from mem import embed_text, cmd_search, cmd_store
 ```
 
-## Grading
-
-S+Memory self-grades across 8 dimensions:
-
-| Dimension | Score |
-|-----------|-------|
-| Data Foundation | 15/15 |
-| Retrieval Intelligence | 15/15 |
-| AGI Modules | 15/15 |
-| Activation & Temporal | 10/10 |
-| Relationship Graph | 10/10 |
-| Multi-Agent Orchestration | 10/10 |
-| Testing & Validation | 10/10 |
-| Documentation & Observability | 5/5 |
-| **Total** | **90/90 (S+)** |
-
-AGI Level: **5+ (Sovereign)** — self-evolving, cross-domain transfer, multi-agent orchestration.
-
 ## Stats
 
-- **30,001 LOC** total system
-- **50 scripts** in memory engine
-- **6 AGI phases** (8-13)
-- **9 test suites** (3,346 LOC)
-- **43 documentation files**
+- **26,469 LOC** total system
+- **44 scripts** in memory engine
+- **5 test suites** (2,323 LOC)
+- **8 documentation files**
 
 ## License
 

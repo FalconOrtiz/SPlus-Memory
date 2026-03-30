@@ -32,7 +32,7 @@ class RobustTestRunner:
 
     def find_phase_file(self, phase_num):
         """Find main file for a phase"""
-        phase_dir = self.phases_dir / f"phase-{phase_num}"
+        phase_dir = self.phases_dir / f"memory-layer{phase_num}"
         
         if not phase_dir.exists():
             return None
@@ -119,7 +119,7 @@ class RobustTestRunner:
     def run_all(self):
         """Scan and test all phases"""
         logger.info("\n" + "="*80)
-        logger.info("AGI TURBO SPRINT - ROBUST TEST SUITE")
+        logger.info("Memory System TURBO SPRINT - ROBUST TEST SUITE")
         logger.info("="*80 + "\n")
 
         suite_start = time.time()
@@ -165,9 +165,9 @@ class RobustTestRunner:
                         
                         self.test("phase_8", "Audio extraction (<100ms)", test_performance)
                 except Exception as e:
-                    logger.error(f"Phase 8 test error: {e}")
+                    logger.error(f"Memory Layer test error: {e}")
         else:
-            logger.info("  No phase-8 file found")
+            logger.info("  No memory-layer file found")
 
         # ─── PHASE 9: DISTRIBUTED EXECUTION ───
         logger.info("\nPHASE 9: DISTRIBUTED EXECUTION ENGINE")
@@ -196,9 +196,9 @@ class RobustTestRunner:
                         
                         self.test("phase_9", "Task scheduling", test_schedule)
                 except Exception as e:
-                    logger.error(f"Phase 9 test error: {e}")
+                    logger.error(f"Memory Layer test error: {e}")
         else:
-            logger.info("  No phase-9 file found")
+            logger.info("  No memory-layer file found")
 
         # ─── PHASE 10: VECTOR + GRAPH STORAGE ───
         logger.info("\nPHASE 10: VECTOR + GRAPH STORAGE")
@@ -255,9 +255,9 @@ class RobustTestRunner:
                         
                         self.test("phase_10", "Vector search (<100ms)", test_query_perf)
                 except Exception as e:
-                    logger.error(f"Phase 10 test error: {e}")
+                    logger.error(f"Memory Layer test error: {e}")
         else:
-            logger.info("  No phase-10 file found")
+            logger.info("  No memory-layer file found")
 
         # ─── PHASE 11: META-LEARNING ───
         logger.info("\nPHASE 11: META-LEARNING ENGINE")
@@ -316,9 +316,9 @@ class RobustTestRunner:
                         
                         self.test("phase_11", "Inference latency (<100ms)", test_inference_speed)
                 except Exception as e:
-                    logger.error(f"Phase 11 test error: {e}")
+                    logger.error(f"Memory Layer test error: {e}")
         else:
-            logger.info("  No phase-11 file found")
+            logger.info("  No memory-layer file found")
 
         # ─── PHASE 12: CAUSAL REASONING ───
         logger.info("\nPHASE 12: CAUSAL REASONING ENGINE")
@@ -378,9 +378,9 @@ class RobustTestRunner:
                         
                         self.test("phase_12", "Causal reasoning", test_reasoning)
                 except Exception as e:
-                    logger.error(f"Phase 12 test error: {e}")
+                    logger.error(f"Memory Layer test error: {e}")
         else:
-            logger.info("  No phase-12 file found")
+            logger.info("  No memory-layer file found")
 
         # ─── PHASE 13: COMMON-SENSE KB ───
         logger.info("\nPHASE 13: COMMON-SENSE KNOWLEDGE BASE")
@@ -427,9 +427,9 @@ class RobustTestRunner:
                         
                         self.test("phase_13", "Transfer learning", test_transfer)
                 except Exception as e:
-                    logger.error(f"Phase 13 test error: {e}")
+                    logger.error(f"Memory Layer test error: {e}")
         else:
-            logger.info("  No phase-13 file found")
+            logger.info("  No memory-layer file found")
 
         self.metrics["total_time"] = time.time() - suite_start
 

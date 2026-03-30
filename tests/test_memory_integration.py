@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """
 ═══════════════════════════════════════════════════════════════════
-MEMORY ENGINE ↔ AGI SPRINT — INTEGRATION TEST SUITE
+MEMORY ENGINE ↔ Memory System SPRINT — INTEGRATION TEST SUITE
 ═══════════════════════════════════════════════════════════════════
 
 Tests the bridge between Hermes Memory Engine (layered architecture)
-and AGI Turbo Sprint modules (Phases 8-13).
+and Memory System Turbo Sprint modules (Phases 8-13).
 
 Integration points tested:
-  1. Memory Facts → Phase 10 Vector Store (storage backend)
-  2. Memory Retrieval → Phase 12 Causal Reasoning (pattern detection)
-  3. Memory Context → Phase 13 Common-Sense KB (knowledge augmentation)
-  4. Memory Access Patterns → Phase 11 Meta-Learning (adaptive optimization)
-  5. Deep Layer Activation → Phase 10 Graph Relations (structural memory)
+  1. Memory Facts → Memory Layer Vector Store (storage backend)
+  2. Memory Retrieval → Memory Layer Causal Reasoning (pattern detection)
+  3. Memory Context → Memory Layer Common-Sense KB (knowledge augmentation)
+  4. Memory Access Patterns → Memory Layer Meta-Learning (adaptive optimization)
+  5. Deep Layer Activation → Memory Layer Graph Relations (structural memory)
   6. Full Pipeline: Query → Retrieve → Reason → Augment → Respond
 
 Author: Falcon / Hermes
@@ -32,20 +32,20 @@ from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
 
 # ── Path setup ─────────────────────────────────────────────────
-AGI_ROOT = Path(__file__).parent.parent / "agi"
+Memory System_ROOT = Path(__file__).parent.parent / "agi"
 MEMORY_ROOT = Path.home() / ".hermes/memory-engine"
 DB_PATH = MEMORY_ROOT / "db/memory.db"
 
-sys.path.insert(0, str(AGI_ROOT / "phase-10"))
-sys.path.insert(0, str(AGI_ROOT / "phase-11"))
-sys.path.insert(0, str(AGI_ROOT / "phase-12"))
-sys.path.insert(0, str(AGI_ROOT / "phase-13"))
+sys.path.insert(0, str(Memory System_ROOT / "memory-layer"))
+sys.path.insert(0, str(Memory System_ROOT / "memory-layer"))
+sys.path.insert(0, str(Memory System_ROOT / "memory-layer"))
+sys.path.insert(0, str(Memory System_ROOT / "memory-layer"))
 sys.path.insert(0, str(MEMORY_ROOT / "scripts"))
 
 # ── Test Framework ─────────────────────────────────────────────
 
 class IntegrationTestSuite:
-    """Runs all integration tests between Memory Engine and AGI modules."""
+    """Runs all integration tests between Memory Engine and Memory System modules."""
 
     def __init__(self):
         self.results: Dict[str, List[dict]] = {}
@@ -125,7 +125,7 @@ class IntegrationTestSuite:
 
 
 # ═══════════════════════════════════════════════════════════════════
-# TEST 1: Memory DB → Phase 10 Vector Store
+# TEST 1: Memory DB → Memory Layer Vector Store
 # ═══════════════════════════════════════════════════════════════════
 
 def test_memory_db_exists():
@@ -154,7 +154,7 @@ def test_memory_facts_populated():
 
 
 def test_vector_store_can_ingest_memory_facts():
-    """Phase 10 VectorStore can ingest facts from memory.db."""
+    """Memory Layer VectorStore can ingest facts from memory.db."""
     from vector_graph_scale import VectorStore, IndexType
     store = VectorStore(dimension=384, index_type=IndexType.HNSW)
 
@@ -172,7 +172,7 @@ def test_vector_store_can_ingest_memory_facts():
 
 
 def test_vector_search_on_memory_facts():
-    """Phase 10 can search vectors derived from memory facts."""
+    """Memory Layer can search vectors derived from memory facts."""
     from vector_graph_scale import VectorStore, IndexType
     store = VectorStore(dimension=384, index_type=IndexType.HNSW)
 
@@ -195,7 +195,7 @@ def test_vector_search_on_memory_facts():
 
 
 def test_graph_relations_for_memory():
-    """Phase 10 GraphStore can model memory fact relationships."""
+    """Memory Layer GraphStore can model memory fact relationships."""
     from vector_graph_scale import GraphStore, RelationType
 
     graph = GraphStore()
@@ -208,11 +208,11 @@ def test_graph_relations_for_memory():
 
 
 # ═══════════════════════════════════════════════════════════════════
-# TEST 2: Memory Patterns → Phase 12 Causal Reasoning
+# TEST 2: Memory Patterns → Memory Layer Causal Reasoning
 # ═══════════════════════════════════════════════════════════════════
 
 def test_causal_engine_on_memory_access_patterns():
-    """Phase 12 can learn causal relations from memory access patterns."""
+    """Memory Layer can learn causal relations from memory access patterns."""
     from causal_reasoning_engine import CausalGraphBuilder
 
     builder = CausalGraphBuilder()
@@ -229,7 +229,7 @@ def test_causal_engine_on_memory_access_patterns():
 
 
 def test_causal_prediction_for_memory_routing():
-    """Phase 12 can predict which memory facts to activate based on query type."""
+    """Memory Layer can predict which memory facts to activate based on query type."""
     from causal_reasoning_engine import CausalReasoningEngine
 
     engine = CausalReasoningEngine()
@@ -251,11 +251,11 @@ def test_causal_prediction_for_memory_routing():
 
 
 # ═══════════════════════════════════════════════════════════════════
-# TEST 3: Memory + Phase 13 Common-Sense Augmentation
+# TEST 3: Memory + Memory Layer Common-Sense Augmentation
 # ═══════════════════════════════════════════════════════════════════
 
 def test_knowledge_base_augments_memory():
-    """Phase 13 KB can provide common-sense context to memory retrievals."""
+    """Memory Layer KB can provide common-sense context to memory retrievals."""
     from common_sense_kb import CommonSenseKnowledgeBase, KnowledgeDomain
 
     kb = CommonSenseKnowledgeBase()
@@ -265,7 +265,7 @@ def test_knowledge_base_augments_memory():
 
 
 def test_knowledge_transfer_for_memory_gaps():
-    """Phase 13 can fill gaps in memory via knowledge transfer."""
+    """Memory Layer can fill gaps in memory via knowledge transfer."""
     from common_sense_kb import CommonSenseKnowledgeBase, KnowledgeDomain
 
     kb = CommonSenseKnowledgeBase()
@@ -287,7 +287,7 @@ def test_knowledge_transfer_for_memory_gaps():
 
 
 def test_cross_domain_reasoning():
-    """Phase 13 can synthesize across domains for memory enrichment."""
+    """Memory Layer can synthesize across domains for memory enrichment."""
     from common_sense_kb import CommonSenseKnowledgeBase, KnowledgeDomain
 
     kb = CommonSenseKnowledgeBase()
@@ -317,11 +317,11 @@ def test_cross_domain_reasoning():
 
 
 # ═══════════════════════════════════════════════════════════════════
-# TEST 4: Memory Access → Phase 11 Meta-Learning
+# TEST 4: Memory Access → Memory Layer Meta-Learning
 # ═══════════════════════════════════════════════════════════════════
 
 def test_meta_learner_on_memory_patterns():
-    """Phase 11 can learn optimal retrieval strategies from memory access logs."""
+    """Memory Layer can learn optimal retrieval strategies from memory access logs."""
     from meta_learning_engine import MetaLearningEngine
 
     engine = MetaLearningEngine()
@@ -348,7 +348,7 @@ def test_meta_learner_on_memory_patterns():
 
 
 def test_meta_learner_adapts_to_access_patterns():
-    """Phase 11 meta-learner improves retrieval strategy selection over time."""
+    """Memory Layer meta-learner improves retrieval strategy selection over time."""
     from meta_learning_engine import MetaLearningEngine
 
     engine = MetaLearningEngine()
@@ -370,7 +370,7 @@ def test_meta_learner_adapts_to_access_patterns():
 
 
 # ═══════════════════════════════════════════════════════════════════
-# TEST 5: Deep Layer ↔ Phase 10 Graph (Structural Memory)
+# TEST 5: Deep Layer ↔ Memory Layer Graph (Structural Memory)
 # ═══════════════════════════════════════════════════════════════════
 
 def test_deep_layer_domain_detection():
@@ -417,7 +417,7 @@ def test_deep_layer_entity_extraction():
 
 
 def test_graph_stores_memory_activation_paths():
-    """Phase 10 graph can store and traverse memory activation paths."""
+    """Memory Layer graph can store and traverse memory activation paths."""
     from vector_graph_scale import GraphStore, RelationType
 
     graph = GraphStore()
@@ -500,7 +500,7 @@ def test_full_pipeline_query_to_response():
 
 
 def test_memory_db_schema_compatibility():
-    """Verify memory.db schema can support AGI integration fields."""
+    """Verify memory.db schema can support Memory System integration fields."""
     if not DB_PATH.exists():
         return False
     conn = sqlite3.connect(str(DB_PATH))
@@ -509,7 +509,7 @@ def test_memory_db_schema_compatibility():
     columns = {row[1] for row in cur.fetchall()}
     conn.close()
 
-    # Required columns for AGI integration
+    # Required columns for Memory System integration
     required = {"content", "confidence"}
     return required.issubset(columns)
 
@@ -550,13 +550,13 @@ def test_end_to_end_latency():
 
 if __name__ == "__main__":
     print("=" * 72)
-    print("  MEMORY ENGINE ↔ AGI SPRINT — INTEGRATION TEST SUITE")
+    print("  MEMORY ENGINE ↔ Memory System SPRINT — INTEGRATION TEST SUITE")
     print("=" * 72)
 
     suite = IntegrationTestSuite()
 
-    # ── Section 1: Memory DB → Phase 10 Vector Store ───────────
-    section = "LAYER 1: Memory DB → Vector+Graph Storage (Phase 10)"
+    # ── Section 1: Memory DB → Memory Layer Vector Store ───────────
+    section = "LAYER 1: Memory DB → Vector+Graph Storage (Memory Layer)"
     suite.section(section)
     suite.run_test("Memory DB exists", section, test_memory_db_exists)
     suite.run_test("Memory facts populated", section, test_memory_facts_populated)
@@ -564,21 +564,21 @@ if __name__ == "__main__":
     suite.run_test("Vector search on memory facts", section, test_vector_search_on_memory_facts)
     suite.run_test("Graph relations for memory entities", section, test_graph_relations_for_memory)
 
-    # ── Section 2: Memory Patterns → Phase 12 Causal ───────────
-    section = "LAYER 2: Memory Patterns → Causal Reasoning (Phase 12)"
+    # ── Section 2: Memory Patterns → Memory Layer Causal ───────────
+    section = "LAYER 2: Memory Patterns → Causal Reasoning (Memory Layer)"
     suite.section(section)
     suite.run_test("Causal engine learns memory access patterns", section, test_causal_engine_on_memory_access_patterns)
     suite.run_test("Causal prediction for memory routing", section, test_causal_prediction_for_memory_routing)
 
-    # ── Section 3: Memory + Phase 13 KB ────────────────────────
-    section = "LAYER 3: Memory + Common-Sense Augmentation (Phase 13)"
+    # ── Section 3: Memory + Memory Layer KB ────────────────────────
+    section = "LAYER 3: Memory + Common-Sense Augmentation (Memory Layer)"
     suite.section(section)
     suite.run_test("Knowledge base augments memory", section, test_knowledge_base_augments_memory)
     suite.run_test("Knowledge transfer fills memory gaps", section, test_knowledge_transfer_for_memory_gaps)
     suite.run_test("Cross-domain reasoning for enrichment", section, test_cross_domain_reasoning)
 
-    # ── Section 4: Memory Access → Phase 11 Meta-Learning ──────
-    section = "LAYER 4: Memory Access → Meta-Learning (Phase 11)"
+    # ── Section 4: Memory Access → Memory Layer Meta-Learning ──────
+    section = "LAYER 4: Memory Access → Meta-Learning (Memory Layer)"
     suite.section(section)
     suite.run_test("Meta-learner on memory access patterns", section, test_meta_learner_on_memory_patterns)
     suite.run_test("Meta-learner adapts to pattern shifts", section, test_meta_learner_adapts_to_access_patterns)
@@ -594,7 +594,7 @@ if __name__ == "__main__":
     section = "LAYER 6: Full Pipeline Integration"
     suite.section(section)
     suite.run_test("Full pipeline: query → search → reason → augment", section, test_full_pipeline_query_to_response)
-    suite.run_test("Memory DB schema AGI-compatible", section, test_memory_db_schema_compatibility)
+    suite.run_test("Memory DB schema Memory System-compatible", section, test_memory_db_schema_compatibility)
     suite.run_test("End-to-end latency < 500ms", section, test_end_to_end_latency)
 
     # ── Summary ────────────────────────────────────────────────
