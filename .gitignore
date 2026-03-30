@@ -1,0 +1,32 @@
+# Database (users create their own)
+db/memory.db
+db/memory.db.*
+db/embedding-cache/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Environment
+.env
+.env.*
+*.key
+*.secret
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Fastembed model cache (downloaded on first run)
+.cache/
