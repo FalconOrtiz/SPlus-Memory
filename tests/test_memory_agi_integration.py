@@ -15,7 +15,7 @@ Integration points tested:
   5. Deep Layer Activation → Phase 10 Graph Relations (structural memory)
   6. Full Pipeline: Query → Retrieve → Reason → Augment → Respond
 
-Author: Falcon / Katsumi
+Author: Falcon / Hermes
 Date: 2026-03-23
 """
 
@@ -403,17 +403,17 @@ def test_deep_layer_entity_extraction():
     ENTITY_PATTERNS = {
         r"stripe": "stripe",
         r"hermes": "hermes",
-        r"katsumi": "katsumi",
+        r"hermes_agent": "hermes_agent",
         r"paperclip": "paperclip",
         r"hostinger": "hostinger",
     }
-    text = "Katsumi needs to deploy Paperclip to Hostinger with Stripe integration"
+    text = "Hermes needs to deploy Paperclip to Hostinger with Stripe integration"
     entities = set()
     for pattern, entity in ENTITY_PATTERNS.items():
         if re.search(pattern, text, re.IGNORECASE):
             entities.add(entity)
 
-    return entities == {"katsumi", "paperclip", "hostinger", "stripe"}
+    return entities == {"hermes_agent", "paperclip", "hostinger", "stripe"}
 
 
 def test_graph_stores_memory_activation_paths():

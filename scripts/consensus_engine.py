@@ -6,7 +6,7 @@ Voting mechanism for multi-agent fact validation.
 
 Each agent votes on fact accuracy (0.0-1.0):
 - Falcon: 0.95 authority (technical implementation)
-- Katsumi: 0.90 authority (pattern recognition)
+- Hermes: 0.90 authority (pattern recognition)
 - LEO: 0.75 authority (external validation)
 
 Consensus rules:
@@ -19,7 +19,7 @@ Usage:
     
     # Register agent votes
     voter.vote('fact_id', 'falcon', 0.95)
-    voter.vote('fact_id', 'katsumi', 0.92)
+    voter.vote('fact_id', 'hermes_agent', 0.92)
     voter.vote('fact_id', 'leo', 0.88)
     
     # Get consensus
@@ -56,7 +56,7 @@ DB_PATH = Path.home() / '.hermes/memory-engine/db/memory.db'
 # Agent authority weights
 AGENT_AUTHORITY = {
     'falcon': 0.95,
-    'katsumi': 0.90,
+    'hermes_agent': 0.90,
     'leo': 0.75
 }
 
@@ -108,7 +108,7 @@ class ConsensusEngine:
         
         Args:
             fact_id: Fact being voted on
-            agent_id: Agent voting (falcon, katsumi, leo)
+            agent_id: Agent voting (falcon, hermes_agent, leo)
             confidence: Vote strength (0.0-1.0)
             reason: Optional reason for vote
         

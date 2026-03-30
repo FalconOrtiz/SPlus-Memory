@@ -327,7 +327,7 @@ class MetricsCollector:
                 results[row['agent_id']] = {
                     'votes': row['votes'],
                     'avg_confidence': round(row['avg_confidence'], 4),
-                    'authority': {'falcon': 0.95, 'katsumi': 0.90, 'leo': 0.75}.get(row['agent_id'], 0.5)
+                    'authority': {'falcon': 0.95, 'hermes_agent': 0.90, 'leo': 0.75}.get(row['agent_id'], 0.5)
                 }
             
             return results

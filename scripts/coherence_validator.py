@@ -257,7 +257,7 @@ class CoherenceValidator:
                        MAX(confidence) as max_conf,
                        COUNT(*) as fact_count
                 FROM memory_facts
-                WHERE agent_id IN ('falcon', 'katsumi', 'leo')
+                WHERE agent_id IN ('falcon', 'hermes_agent', 'leo')
                 GROUP BY agent_id
                 HAVING (max_conf - min_conf) > 0.5
             """)
@@ -457,7 +457,7 @@ class CoherenceValidator:
                 SELECT agent_id, COUNT(*) as fact_count,
                        AVG(confidence) as avg_confidence
                 FROM memory_facts
-                WHERE agent_id IN ('falcon', 'katsumi', 'leo')
+                WHERE agent_id IN ('falcon', 'hermes_agent', 'leo')
                 GROUP BY agent_id
             """)
             

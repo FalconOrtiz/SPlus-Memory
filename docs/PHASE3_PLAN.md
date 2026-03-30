@@ -356,7 +356,7 @@ By end of Friday (Apr 13):
 ## Phase 4 Preview (Week 4+)
 
 - **Smart Context Injection** — Context window selection using semantic + temporal + usage
-- **Multi-agent Isolation** — Separate Falcon/Katsumi memory spaces
+- **Multi-agent Isolation** — Separate Falcon/Hermes memory spaces
 - **Skill Triggers** — When to use memory vs other tools
 - **Observability** — Real-time memory system monitoring
 

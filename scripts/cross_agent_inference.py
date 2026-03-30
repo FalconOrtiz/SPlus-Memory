@@ -6,14 +6,14 @@ Query all agents simultaneously and synthesize unified answers.
 
 Process:
 1. Parse user query
-2. Route to all agents (Falcon, Katsumi, LEO)
+2. Route to all agents (Falcon, Hermes, LEO)
 3. Each agent searches memory independently
 4. Combine results with weighted ranking
 5. Synthesize unified answer with confidence score
 
 Agent specialization:
 - Falcon: Technical facts, implementation details, system architecture
-- Katsumi: Patterns, relationships, temporal context, memories
+- Hermes: Patterns, relationships, temporal context, memories
 - LEO: External validation, external data sources, outreach context
 
 Usage:
@@ -37,10 +37,10 @@ Example output:
         "confidence": 0.91,
         "agent_results": {
             "falcon": [score, score, score, ...],
-            "katsumi": [score, score, score, ...],
+            "hermes_agent": [score, score, score, ...],
             "leo": [score, score, score, ...]
         },
-        "combined_ranking": [top_1_from_falcon, top_2_from_katsumi, ...],
+        "combined_ranking": [top_1_from_falcon, top_2_from_hermes_agent, ...],
         "synthesis_method": "weighted_fusion",
         "timestamp": "2026-03-24T18:30:00"
     }
@@ -77,7 +77,7 @@ AGENT_SPECIALIZATION = {
         'optimization': 0.80,
         'default': 0.75
     },
-    'katsumi': {
+    'hermes_agent': {
         'pattern': 0.95,
         'relationship': 0.92,
         'temporal': 0.90,
@@ -130,7 +130,7 @@ class CrossAgentInferencer:
         self.db_path = db_path or DB_PATH
         self.conn = None
         self._connect()
-        self.agents = ['falcon', 'katsumi', 'leo']
+        self.agents = ['falcon', 'hermes_agent', 'leo']
     
     def _connect(self):
         """Connect to database."""

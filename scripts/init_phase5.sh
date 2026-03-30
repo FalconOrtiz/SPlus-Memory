@@ -108,7 +108,7 @@ CREATE INDEX IF NOT EXISTS idx_perf_agent ON agent_performance_log(agent_id);
 INSERT OR IGNORE INTO agent_state (agent_id, last_sync, fact_count, sync_status)
 VALUES ('falcon', NULL, 0, 'never_synced');
 INSERT OR IGNORE INTO agent_state (agent_id, last_sync, fact_count, sync_status)
-VALUES ('katsumi', NULL, 0, 'never_synced');
+VALUES ('hermes_agent', NULL, 0, 'never_synced');
 INSERT OR IGNORE INTO agent_state (agent_id, last_sync, fact_count, sync_status)
 VALUES ('leo', NULL, 0, 'never_synced');
 EOF

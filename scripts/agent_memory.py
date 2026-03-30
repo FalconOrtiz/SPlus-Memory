@@ -11,7 +11,7 @@ Architecture:
     └──────────┬──────────────┬───────────────┘
                │              │
     ┌──────────▼──────┐  ┌────▼──────────────┐
-    │  HERMES MEMORY  │  │  KATSUMI MEMORY   │
+    │  HERMES MEMORY  │  │  HERMES MEMORY   │
     │  (main session) │  │  (telegram groups) │
     │  - full access  │  │  - group context   │
     │  - sensitive ok  │  │  - no secrets      │
@@ -20,12 +20,12 @@ Architecture:
 
 Agents:
     hermes  — Main session, full access, sensitive data ok
-    katsumi — Telegram groups, social context, no secrets
+    hermes_agent — Telegram groups, social context, no secrets
 
 Rules:
     - Each agent has a private memory scope
     - Shared facts are visible to both
-    - Secrets/credentials never cross to katsumi
+    - Secrets/credentials never cross to hermes_agent
     - Conflicts between agents are detected and flagged
     - Cross-agent sharing requires explicit SHARE_WITH tag
 
@@ -34,16 +34,16 @@ Usage:
     mgr.add_fact("API key is xyz", agent="hermes", scope="private")
     mgr.add_fact("Falcon likes coffee", agent="hermes", scope="shared")
     
-    # Katsumi sees shared facts only
-    facts = mgr.get_facts(agent="katsumi")
+    # Hermes sees shared facts only
+    facts = mgr.get_facts(agent="hermes_agent")
     
     # Hermes sees everything (own + shared)
     facts = mgr.get_facts(agent="hermes")
 
 CLI:
     python3 agent_memory.py --add "fact" --agent hermes --scope private
-    python3 agent_memory.py --query "search" --agent katsumi
-    python3 agent_memory.py --share fact_id --with katsumi
+    python3 agent_memory.py --query "search" --agent hermes_agent
+    python3 agent_memory.py --share fact_id --with hermes_agent
     python3 agent_memory.py --conflicts
     python3 agent_memory.py --stats
 """
@@ -75,7 +75,7 @@ AGENTS = {
         "can_write": ["private", "shared"],
         "sensitive_access": True,
     },
-    "katsumi": {
+    "hermes_agent": {
         "description": "Telegram group agent, social context only",
         "can_see": ["shared"],       # cannot see hermes-private
         "can_write": ["private", "shared"],
@@ -83,7 +83,7 @@ AGENTS = {
     },
 }
 
-# Patterns that indicate sensitive content (never share with katsumi)
+# Patterns that indicate sensitive content (never share with hermes_agent)
 SENSITIVE_PATTERNS = [
     r"api[_\s-]?key",
     r"password",
@@ -220,7 +220,7 @@ class AgentMemoryManager:
         
         Args:
             content: The fact text
-            agent: "hermes" or "katsumi"
+            agent: "hermes" or "hermes_agent"
             scope: "private" (agent-only) or "shared" (both agents)
             force_sensitive: Override auto-detection
         
@@ -233,14 +233,14 @@ class AgentMemoryManager:
         # Auto-detect sensitivity
         sensitive = force_sensitive if force_sensitive is not None else self.is_sensitive(content)
 
-        # SECURITY: sensitive content from katsumi is blocked from shared scope
+        # SECURITY: sensitive content from hermes_agent is blocked from shared scope
         if sensitive and scope == "shared":
             logger.warning(f"Sensitive content blocked from shared scope")
             scope = "private"
 
-        # SECURITY: sensitive content never goes to katsumi
-        if sensitive and agent == "katsumi":
-            logger.warning(f"Sensitive content blocked from katsumi agent")
+        # SECURITY: sensitive content never goes to hermes_agent
+        if sensitive and agent == "hermes_agent":
+            logger.warning(f"Sensitive content blocked from hermes_agent agent")
             return ""
 
         import hashlib
@@ -271,7 +271,7 @@ class AgentMemoryManager:
         Get facts visible to an agent.
         
         Hermes sees: own private + all shared
-        Katsumi sees: own private + shared (non-sensitive only)
+        Hermes sees: own private + shared (non-sensitive only)
         """
         if agent not in AGENTS:
             raise ValueError(f"Unknown agent: {agent}")
@@ -291,7 +291,7 @@ class AgentMemoryManager:
             if agent_config["sensitive_access"]:
                 conditions.append("(scope = 'shared')")
             else:
-                # Katsumi: shared but not sensitive
+                # Hermes: shared but not sensitive
                 conditions.append("(scope = 'shared' AND is_sensitive = 0)")
 
         # Also include facts explicitly shared with this agent
@@ -337,7 +337,7 @@ class AgentMemoryManager:
         Share a fact with another agent.
         
         Security checks:
-          - Sensitive facts cannot be shared with katsumi
+          - Sensitive facts cannot be shared with hermes_agent
           - Fact must exist
           - Target agent must be valid
         """
@@ -355,9 +355,9 @@ class AgentMemoryManager:
 
         content, from_agent, is_sensitive, shared_json = row
 
-        # SECURITY: never share sensitive with katsumi
-        if is_sensitive and to_agent == "katsumi":
-            logger.warning(f"BLOCKED: Cannot share sensitive fact {fact_id} with katsumi")
+        # SECURITY: never share sensitive with hermes_agent
+        if is_sensitive and to_agent == "hermes_agent":
+            logger.warning(f"BLOCKED: Cannot share sensitive fact {fact_id} with hermes_agent")
             return False
 
         # Update shared_with
@@ -395,16 +395,16 @@ class AgentMemoryManager:
 
         # Get all facts by agent
         hermes_facts = self.get_facts("hermes", top_k=1000)
-        katsumi_facts = self.get_facts("katsumi", top_k=1000)
+        hermes_agent_facts = self.get_facts("hermes_agent", top_k=1000)
 
-        if not self.embedder or not hermes_facts or not katsumi_facts:
+        if not self.embedder or not hermes_facts or not hermes_agent_facts:
             return conflicts
 
         # Cross-compare using semantic similarity
         # High similarity + different content = potential conflict
         for hf in hermes_facts:
             hvec = self.embedder.embed(hf.content)
-            for kf in katsumi_facts:
+            for kf in hermes_agent_facts:
                 if hf.id == kf.id:
                     continue
                 kvec = self.embedder.embed(kf.content)
@@ -414,7 +414,7 @@ class AgentMemoryManager:
                 if sim > 0.85 and hf.content.lower() != kf.content.lower():
                     conflict = Conflict(
                         agent_a="hermes",
-                        agent_b="katsumi",
+                        agent_b="hermes_agent",
                         fact_a=hf.content,
                         fact_b=kf.content,
                         conflict_type="high_similarity_diff_content",
@@ -426,7 +426,7 @@ class AgentMemoryManager:
                         INSERT INTO agent_conflicts
                         (agent_a, agent_b, fact_a_id, fact_b_id, fact_a_content, fact_b_content, conflict_type)
                         VALUES (?, ?, ?, ?, ?, ?, ?)
-                    """, ("hermes", "katsumi", hf.id, kf.id, hf.content, kf.content,
+                    """, ("hermes", "hermes_agent", hf.id, kf.id, hf.content, kf.content,
                           "high_similarity_diff_content"))
 
         self.conn.commit()
@@ -550,7 +550,7 @@ def main():
 
     parser = argparse.ArgumentParser(description="Multi-Agent Memory (Phase 6)")
     parser.add_argument("--add", type=str, help="Add a fact")
-    parser.add_argument("--agent", type=str, default="hermes", help="Agent: hermes or katsumi")
+    parser.add_argument("--agent", type=str, default="hermes", help="Agent: hermes or hermes_agent")
     parser.add_argument("--scope", type=str, default="private", choices=["private", "shared"])
     parser.add_argument("--query", type=str, help="Query facts visible to agent")
     parser.add_argument("--share", type=str, help="Share a fact ID with another agent")

@@ -2,7 +2,7 @@
 """
 Agent Synchronizer — Phase 5
 
-Synchronizes memory across multiple AI agents (Falcon, Katsumi, LEO).
+Synchronizes memory across multiple AI agents (Falcon, Hermes, LEO).
 
 Capabilities:
 - Detect new/updated facts from each agent
@@ -15,13 +15,13 @@ Usage:
     sync = AgentSynchronizer()
     
     # Sync between two agents
-    report = sync.sync_agents(['falcon', 'katsumi'])
+    report = sync.sync_agents(['falcon', 'hermes_agent'])
     
     # Pull updates from agent
     updates = sync.pull_updates('falcon')
     
     # Push consensus facts
-    sync.push_updates('katsumi', consensus_facts)
+    sync.push_updates('hermes_agent', consensus_facts)
     
     # Get sync status
     status = sync.get_sync_status()
@@ -51,7 +51,7 @@ DB_PATH = Path.home() / '.hermes/memory-engine/db/memory.db'
 # Agent authority weights (used in conflict resolution)
 AGENT_AUTHORITY = {
     'falcon': 0.95,    # Technical authority
-    'katsumi': 0.90,   # System patterns
+    'hermes_agent': 0.90,   # System patterns
     'leo': 0.75        # External validation
 }
 
@@ -85,7 +85,7 @@ class AgentSynchronizer:
         Get new/updated facts from an agent.
         
         Args:
-            agent_id: Agent to pull from ('falcon', 'katsumi', 'leo')
+            agent_id: Agent to pull from ('falcon', 'hermes_agent', 'leo')
         
         Returns:
             List of new/updated facts

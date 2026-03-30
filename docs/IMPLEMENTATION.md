@@ -418,7 +418,7 @@ Week 2 (Mar 30-Apr 6): Temporal weighting
 - **Phase 3**: Fact deduplication + contradiction detection
 - **Phase 4**: Dynamic context selection (smart token budgeting)
 - **Phase 5**: Skill trigger intelligence (when to use what)
-- **Phase 6**: Multi-agent memory coherence (Hermes/Katsumi)
+- **Phase 6**: Multi-agent memory coherence (Hermes/Hermes)
 - **Phase 7**: Observability dashboard + continuous improvement
 
 ---

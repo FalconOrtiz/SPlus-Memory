@@ -35,7 +35,7 @@
   - Profiles created: 3
     - Falcon (user)
     - Hermes (agent)
-    - Katsumi (agent)
+    - Hermes (agent)
   - Attributes: 7 total
   - Tables created: `profiles`, `profile_attributes`
 - **Contribution**: +15% (85% → 100% ✓ TARGET EXCEEDED)
@@ -125,7 +125,7 @@ FINAL: 100%+ COMPLETENESS ACHIEVED ✓
 - **Profiles**:
   - Falcon (user): 3 attributes
   - Hermes (agent): 2 attributes
-  - Katsumi (agent): 2 attributes
+  - Hermes (agent): 2 attributes
 - **Total Attributes**: 7
 
 ### Sessions

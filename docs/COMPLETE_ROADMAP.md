@@ -66,7 +66,7 @@ Smart data management:
 **~86 KB | Week 5**
 
 Unified multi-agent system:
-- Agent synchronization (Falcon/Katsumi/LEO)
+- Agent synchronization (Falcon/Hermes/LEO)
 - Consensus voting (0.0-1.0 scoring)
 - Cross-agent inference
 - Coherence validation
@@ -81,7 +81,7 @@ Unified multi-agent system:
 **Agent Roles**:
 ```
 Falcon:   0.95 authority (Technical)
-Katsumi:  0.90 authority (Patterns)
+Hermes:  0.90 authority (Patterns)
 LEO:      0.75 authority (External)
 ```
 
@@ -238,13 +238,13 @@ Operations:
 User Query
     ↓
 [Phase 5] Synchronize Agents
-    ├─ Pull updates from Falcon, Katsumi, LEO
+    ├─ Pull updates from Falcon, Hermes, LEO
     ├─ Resolve conflicts
     └─ Push consensus versions
     ↓
 [Phase 5] Cross-Agent Inference
     ├─ Falcon queries (technical facts)
-    ├─ Katsumi queries (patterns)
+    ├─ Hermes queries (patterns)
     └─ LEO queries (external validation)
     ↓
 [Phase 1-2] Hybrid Ranking

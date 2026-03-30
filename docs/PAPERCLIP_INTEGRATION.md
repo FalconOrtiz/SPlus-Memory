@@ -21,14 +21,14 @@ Agent Registry + Activity Log
 
 ```
 IRE Digital (company)
-├── Katsumi (hub) — Orchestrates all agents
+├── Hermes (hub) — Orchestrates all agents
 │   ├── Hermes (memory) — Facts, embeddings, predictions
 │   ├── LEO (outreach) — Email, LinkedIn automation
 │   ├── NOVA (execution) — Task runner
 │   └── ARIA (analysis) — Data analysis
 ```
 
-Hermes reports to Katsumi hub which coordinates decisions.
+Hermes reports to Hermes hub which coordinates decisions.
 
 ## Setup
 
@@ -38,7 +38,7 @@ Hermes reports to Katsumi hub which coordinates decisions.
 export PAPERCLIP_BASE_URL="http://localhost:3100"  # or production URL
 export PAPERCLIP_COMPANY_ID="ire-digital"
 export HERMES_AGENT_ID="hermes-memory"
-export KATSUMI_HUB_ID="katsumi-hub"
+export HERMES_HUB_ID="hermes_agent-hub"
 export PAPERCLIP_API_KEY="your-api-key"  # optional for local dev
 ```
 
@@ -72,7 +72,7 @@ HERMES STATS:
   recent_actions_1h         0
 
 AGENTS (5):
-  katsumi-hub          active
+  hermes_agent-hub          active
   leo-outreach         idle
   nova-executor        paused
   aria-analyst         active
@@ -133,12 +133,12 @@ print(leo_status.status)  # "active", "idle", "paused", "error"
 bridge.close()
 ```
 
-### Coordinate with Katsumi
+### Coordinate with Hermes
 
-When Hermes makes a major decision (like archiving facts or making predictions), notify Katsumi:
+When Hermes makes a major decision (like archiving facts or making predictions), notify Hermes:
 
 ```python
-bridge.coordinate_with_katsumi(
+bridge.coordinate_with_hermes_agent(
     action_type="archive",
     payload={
         "facts_affected": 45,
@@ -149,7 +149,7 @@ bridge.coordinate_with_katsumi(
 )
 ```
 
-Katsumi then:
+Hermes then:
 1. Logs the action
 2. Notifies relevant agents (NOVA for cleanup, ARIA for analysis)
 3. Updates company audit trail
@@ -160,7 +160,7 @@ Katsumi then:
 
 When Phase 8D predictive pre-loading runs:
 - Log prediction to Paperclip
-- Notify Katsumi of domain activation
+- Notify Hermes of domain activation
 - Track heat map changes
 
 ```python
@@ -168,7 +168,7 @@ When Phase 8D predictive pre-loading runs:
 from paperclip_bridge import PaperclipBridge
 
 bridge = PaperclipBridge()
-bridge.coordinate_with_katsumi(
+bridge.coordinate_with_hermes_agent(
     "temporal_prediction",
     {
         "domains": prediction.predicted_domains,
@@ -182,11 +182,11 @@ bridge.coordinate_with_katsumi(
 
 When facts are archived automatically:
 - Log to Paperclip activity stream
-- Katsumi can trigger cleanup tasks in other agents
+- Hermes can trigger cleanup tasks in other agents
 
 ```python
 # In decay_scheduler.py
-bridge.coordinate_with_katsumi(
+bridge.coordinate_with_hermes_agent(
     "auto_archive",
     {
         "facts_affected": len(facts_to_archive),
@@ -199,7 +199,7 @@ bridge.coordinate_with_katsumi(
 
 When memory self-improves:
 - Log improvement to audit trail
-- Katsumi tracks system health
+- Hermes tracks system health
 
 ### 4. Content Scheduler → Paperclip
 
@@ -229,10 +229,10 @@ bridge.get_agent_status(agent_id: str) → AgentStatus
 bridge.list_agents() → List[AgentStatus]
 
 # Coordinate
-bridge.coordinate_with_katsumi(action_type: str, payload: Dict) → bool
+bridge.coordinate_with_hermes_agent(action_type: str, payload: Dict) → bool
 
 # Get config
-bridge.get_katsumi_config() → Dict
+bridge.get_hermes_agent_config() → Dict
 
 # Health
 bridge.get_status() → Dict
@@ -256,8 +256,8 @@ python3 paperclip_bridge.py log {action_type} \
   --domains domain1 domain2 \
   --reason "description"
 
-# Get Katsumi config
-python3 paperclip_bridge.py katsumi [--json]
+# Get Hermes config
+python3 paperclip_bridge.py hermes_agent [--json]
 
 # Custom base URL / API key
 python3 paperclip_bridge.py status \
@@ -338,14 +338,14 @@ else:
 bridge.close()
 ```
 
-### Example 3: Notify Katsumi of Archive
+### Example 3: Notify Hermes of Archive
 
 ```python
 bridge = PaperclipBridge()
 bridge.connect()
 
 # After archiving old facts
-bridge.coordinate_with_katsumi(
+bridge.coordinate_with_hermes_agent(
     action_type="archive_complete",
     payload={
         "facts_affected": 45,

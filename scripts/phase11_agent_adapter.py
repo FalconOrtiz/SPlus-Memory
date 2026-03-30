@@ -4,7 +4,7 @@ Phase 11: Agent Adapter
 Wrapper para que agentes soliciten contexto y reporten costos.
 
 Propósito:
-- Abstracción para agentes (Falcon/Katsumi/LEO/NOVA/ARIA)
+- Abstracción para agentes (Falcon/Hermes/LEO/NOVA/ARIA)
 - Solicita contexto a Paperclip Memory API
 - Reporta tokens y costos después de ejecución
 - Maneja re-intentos y fallbacks
@@ -30,7 +30,7 @@ Uso por agent:
 
 Integración:
     • Falcon (director) → solicita contexto macro
-    • Katsumi (hub) → coordina contexto multi-agent
+    • Hermes (hub) → coordina contexto multi-agent
     • LEO (center) → contexto operativo
     • NOVA/ARIA (support) → contexto específico de domain
 

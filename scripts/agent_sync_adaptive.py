@@ -16,7 +16,7 @@ Default Config (easily customizable):
   {
     "agents": {
       "falcon": {"authority": 0.95, "role": "technical"},
-      "katsumi": {"authority": 0.90, "role": "patterns"},
+      "hermes_agent": {"authority": 0.90, "role": "patterns"},
       "leo": {"authority": 0.75, "role": "external"}
     }
   }
@@ -43,7 +43,7 @@ Usage:
     agents = sync.get_configured_agents()
     
     # Sync specific subset
-    report = sync.sync_agents(['falcon', 'katsumi'])
+    report = sync.sync_agents(['falcon', 'hermes_agent'])
 """
 
 import sqlite3
@@ -75,7 +75,7 @@ DEFAULT_AGENTS = {
         "role": "technical",
         "description": "Technical implementation expert"
     },
-    "katsumi": {
+    "hermes_agent": {
         "authority": 0.90,
         "role": "patterns",
         "description": "Pattern recognition & temporal context"

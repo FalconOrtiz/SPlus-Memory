@@ -12,7 +12,7 @@ Phase 4 adds intelligence and observability to the memory system:
 1. **Auto-Embedding Generation** — Generate embeddings for new facts automatically
 2. **Contradiction Detection** — Identify and flag conflicting facts
 3. **Memory Health Dashboard** — Analytics and system monitoring
-4. **Multi-Agent Isolation** — Separate Falcon/Katsumi memory spaces
+4. **Multi-Agent Isolation** — Separate Falcon/Hermes memory spaces
 5. **Continuous Improvement** — Self-optimizing memory system
 
 ---
@@ -94,7 +94,7 @@ Type B: Temporal conflicts
   "Phase 3 started Monday" vs "Phase 3 started Tuesday"
   
 Type C: Source conflicts
-  "Falcon says X" vs "Katsumi says not X"
+  "Falcon says X" vs "Hermes says not X"
   
 Type D: Category conflicts
   "Memory system is working" vs "Memory system is broken"
@@ -202,7 +202,7 @@ class MultiAgentMemory:
         """
         Initialize memory for a specific agent.
         
-        agent_id: 'falcon', 'katsumi', 'leo', etc.
+        agent_id: 'falcon', 'hermes_agent', 'leo', etc.
         """
         self.agent_id = agent_id
         
@@ -229,7 +229,7 @@ class MultiAgentMemory:
         Example:
         - User asks about decay
         - Falcon's memory has implementation details
-        - Katsumi's memory has usage patterns
+        - Hermes's memory has usage patterns
         - Combine both for complete answer
         """
 ```
@@ -387,7 +387,7 @@ Total: ~70 KB
 ## Phase 5+ Preview
 
 **Phase 5: Multi-Agent Coherence** (Week 5)
-- Falcon/Katsumi memory synchronization
+- Falcon/Hermes memory synchronization
 - Shared fact consensus
 - Cross-agent inference
 - Conflict resolution

@@ -83,17 +83,17 @@ engine.add_attribute(hermes_id, "role", "memory manager", AttributeCategory.CAPA
 engine.add_attribute(hermes_id, "model", "claude-3.5-haiku", AttributeCategory.METADATA, is_static=False, confidence=0.9)
 engine.add_attribute(hermes_id, "version", "v8.2", AttributeCategory.METADATA, is_static=False, confidence=0.9)
 
-# Create Katsumi profile
-katsumi_id = engine.create_profile(
-    "Katsumi",
+# Create Hermes profile
+hermes_agent_id = engine.create_profile(
+    "Hermes",
     ProfileType.AGENT,
-    external_id="katsumi_agent",
+    external_id="hermes_agent",
     description="Support AI agent, hub"
 )
 
-# Add Katsumi attributes
-engine.add_attribute(katsumi_id, "role", "hub coordinator", AttributeCategory.CAPABILITY, is_static=True, confidence=1.0)
-engine.add_attribute(katsumi_id, "model", "claude-3-opus", AttributeCategory.METADATA, is_static=False, confidence=0.9)
+# Add Hermes attributes
+engine.add_attribute(hermes_agent_id, "role", "hub coordinator", AttributeCategory.CAPABILITY, is_static=True, confidence=1.0)
+engine.add_attribute(hermes_agent_id, "model", "claude-3-opus", AttributeCategory.METADATA, is_static=False, confidence=0.9)
 
 # Set dynamic context (current tasks, status, etc.)
 engine.set_dynamic_context(falcon_id, "current_project", {"project": "memory-engine", "status": "gap-closure"})

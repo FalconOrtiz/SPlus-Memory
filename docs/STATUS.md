@@ -230,7 +230,7 @@ Context injection:
    - Health dashboard in Phase 7
 
 4. **Multi-Agent** - Not yet isolated
-   - Hermes/Katsumi separation in Phase 6
+   - Hermes/Hermes separation in Phase 6
 
 ---
 
@@ -253,7 +253,7 @@ Context injection:
 - [ ] Dependency chains
 
 ### Phase 6: Multi-Agent (Week 6)
-- [ ] Hermes ↔ Katsumi isolation
+- [ ] Hermes ↔ Hermes isolation
 - [ ] Shared memory layer
 - [ ] Conflict resolution
 

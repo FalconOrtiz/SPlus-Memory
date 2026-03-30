@@ -495,7 +495,7 @@ cp ~/.hermes/memory-engine/db/memory.db.pre-phase3 \
 Once embeddings are working:
 
 1. **Phase 4**: Integrate with 5 gaps (relationship discovery)
-2. **Phase 5**: Multi-agent coherence (Hermes ↔ Katsumi embeddings)
+2. **Phase 5**: Multi-agent coherence (Hermes ↔ Hermes embeddings)
 3. **Phase 6**: Continuous learning (improve embeddings over time)
 
 ---

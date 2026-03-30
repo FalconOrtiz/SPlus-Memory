@@ -98,7 +98,7 @@ class MultiAgentOrchestrator:
         self.inferencer = CrossAgentInferencer(db_path)
         self.validator = CoherenceValidator(db_path)
         
-        self.agents = ['falcon', 'katsumi', 'leo']
+        self.agents = ['falcon', 'hermes_agent', 'leo']
         self.status = {
             'last_sync': None,
             'last_inference': None,

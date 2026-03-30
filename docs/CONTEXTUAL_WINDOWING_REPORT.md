@@ -329,7 +329,7 @@ prompt += format_facts(window['selected_facts'])
   - Update semantic scoring
 
 - **Phase 4**: Multi-agent Memory
-  - Falcon vs Katsumi separation
+  - Falcon vs Hermes separation
   - Shared vs private facts
   - Agent isolation
 

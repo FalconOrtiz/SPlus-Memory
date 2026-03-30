@@ -228,7 +228,7 @@ class ProceduralExtractor:
         "social_media": r"twitter|x\.com|linkedin|youtube|instagram|tiktok|post|content",
         "content": r"content|blog|article|video|script|copy|strategy|publish",
         "marketing": r"marketing|seo|ads|campaign|funnel|conversion|lead",
-        "ai_agents": r"agent|llm|model|claude|gpt|hermes|katsumi|orchestrat",
+        "ai_agents": r"agent|llm|model|claude|gpt|hermes|hermes_agent|orchestrat",
         "memory_system": r"memory|rag|embedding|vector|retrieval|index|fact|recall",
         "security": r"security|encrypt|credential|secret|vault|firewall",
         "monitoring": r"monitor|dashboard|log|alert|metric|health|observ",
@@ -295,7 +295,7 @@ class ProceduralExtractor:
         # Extract entities (proper nouns, tool names, file paths)
         entities = []
         # Tool/service names
-        tools = re.findall(r'\b(?:stripe|claude|hermes|katsumi|docker|nginx|postgres|redis|node|python|git|npm|pip)\b', text_lower)
+        tools = re.findall(r'\b(?:stripe|claude|hermes|hermes_agent|docker|nginx|postgres|redis|node|python|git|npm|pip)\b', text_lower)
         entities.extend(set(tools))
         # File paths
         files = re.findall(r'[\w./~-]+\.\w{1,4}', text)

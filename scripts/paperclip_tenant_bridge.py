@@ -6,7 +6,7 @@ Integración del Memory Engine con Paperclip control plane.
 
 Propósito:
 - Aislar memoria por company_id (Paperclip tenant)
-- Sincronizar agentes (Falcon > Katsumi > LEO > NOVA/ARIA)
+- Sincronizar agentes (Falcon > Hermes > LEO > NOVA/ARIA)
 - Gestionar presupuesto de tokens por agent
 - Coordinar contexto entre agentes de la misma company
 

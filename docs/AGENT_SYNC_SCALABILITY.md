@@ -9,7 +9,7 @@
 ## Problem Statement
 
 **Original Implementation**:
-- ❌ Hardcoded for 3 specific agents (falcon, katsumi, leo)
+- ❌ Hardcoded for 3 specific agents (falcon, hermes_agent, leo)
 - ❌ Fixed authority weights in code
 - ❌ Not portable across deployments
 - ❌ Couldn't scale to N agents
@@ -36,7 +36,7 @@ All agents defined in **`agents.json`**:
       "role": "technical",
       "specializations": ["architecture", "implementation"]
     },
-    "katsumi": {
+    "hermes_agent": {
       "authority": 0.90,
       "role": "patterns"
     },
@@ -58,8 +58,8 @@ All agents defined in **`agents.json`**:
    └─ Fallback to DEFAULT_AGENTS if not
    ↓
 3. Extract agent list & authority weights
-   ├─ agents = ['falcon', 'katsumi', 'leo', ...]
-   └─ authority_weights = {falcon: 0.95, katsumi: 0.90, ...}
+   ├─ agents = ['falcon', 'hermes_agent', 'leo', ...]
+   └─ authority_weights = {falcon: 0.95, hermes_agent: 0.90, ...}
    ↓
 4. Ready to sync any configured agents
 ```
@@ -131,7 +131,7 @@ sync.sync_all()  # Syncs both agents
 {
   "agents": {
     "falcon": {"authority": 0.95, "role": "technical"},
-    "katsumi": {"authority": 0.90, "role": "patterns"},
+    "hermes_agent": {"authority": 0.90, "role": "patterns"},
     "leo": {"authority": 0.75, "role": "external"}
   }
 }
@@ -151,7 +151,7 @@ sync.sync_all()  # Syncs both agents
 {
   "agents": {
     "falcon": {"authority": 0.95, "role": "technical"},
-    "katsumi": {"authority": 0.90, "role": "patterns"},
+    "hermes_agent": {"authority": 0.90, "role": "patterns"},
     "leo": {"authority": 0.75, "role": "external"},
     "nova": {"authority": 0.88, "role": "optimization"},
     "aria": {"authority": 0.85, "role": "coordination"},
@@ -196,7 +196,7 @@ sync = AdaptiveAgentSynchronizer()
 
 # Auto-discover agents from memory_facts
 discovered = sync.discover_agents()
-# → ['falcon', 'katsumi', 'leo', 'unknown_agent']
+# → ['falcon', 'hermes_agent', 'leo', 'unknown_agent']
 
 # Automatically registers unknown agents
 ```
@@ -214,7 +214,7 @@ sync.unregister_agent('leo')
 agents = sync.get_configured_agents()
 # → [
 #   {agent_id: 'falcon', authority: 0.95, role: 'technical', ...},
-#   {agent_id: 'katsumi', authority: 0.90, role: 'patterns', ...},
+#   {agent_id: 'hermes_agent', authority: 0.90, role: 'patterns', ...},
 #   ...
 # ]
 ```
@@ -265,7 +265,7 @@ Adjust weights in `agents.json` to influence conflict outcomes:
 report = sync.sync_all()
 # {
 #   'timestamp': '2026-03-24T18:30:00Z',
-#   'agents': ['falcon', 'katsumi', 'leo'],
+#   'agents': ['falcon', 'hermes_agent', 'leo'],
 #   'agent_count': 3,
 #   'facts_pulled': 45,
 #   'conflicts_detected': 3,
@@ -278,7 +278,7 @@ report = sync.sync_all()
 ### Subset of Agents
 
 ```python
-report = sync.sync_agents(['falcon', 'katsumi'])
+report = sync.sync_agents(['falcon', 'hermes_agent'])
 # Syncs only these two agents, ignores 'leo'
 ```
 
@@ -289,7 +289,7 @@ status = sync.get_sync_status()
 # {
 #   'agents': {
 #     'falcon': {'last_sync': '2026-03-24T18:30:00Z', 'status': 'synced', 'authority': 0.95},
-#     'katsumi': {'last_sync': '2026-03-24T18:30:00Z', 'status': 'synced', 'authority': 0.90},
+#     'hermes_agent': {'last_sync': '2026-03-24T18:30:00Z', 'status': 'synced', 'authority': 0.90},
 #     'leo': {'last_sync': None, 'status': 'never_synced', 'authority': 0.75}
 #   },
 #   'agent_count': 3
@@ -306,7 +306,7 @@ status = sync.get_sync_status()
 ```python
 AGENT_AUTHORITY = {
     'falcon': 0.95,
-    'katsumi': 0.90,
+    'hermes_agent': 0.90,
     'leo': 0.75
 }
 ```
@@ -316,7 +316,7 @@ AGENT_AUTHORITY = {
 {
   "agents": {
     "falcon": {"authority": 0.95, ...},
-    "katsumi": {"authority": 0.90, ...},
+    "hermes_agent": {"authority": 0.90, ...},
     "leo": {"authority": 0.75, ...}
   }
 }
@@ -379,7 +379,7 @@ cp agents.json ~/.hermes/memory-engine/config/
 {
   "agents": {
     "falcon": {"authority": 0.95},
-    "katsumi": {"authority": 0.90}
+    "hermes_agent": {"authority": 0.90}
   }
 }
 ```
@@ -389,7 +389,7 @@ cp agents.json ~/.hermes/memory-engine/config/
 {
   "agents": {
     "falcon": {"authority": 0.95},
-    "katsumi": {"authority": 0.90},
+    "hermes_agent": {"authority": 0.90},
     "leo": {"authority": 0.75}
   }
 }
@@ -438,7 +438,7 @@ python3 agent_sync_adaptive.py --sync-all
 Output:
 ✓ Sync All Agents (3 agents):
   timestamp: 2026-03-24T18:30:00Z
-  agents: ['falcon', 'katsumi', 'leo']
+  agents: ['falcon', 'hermes_agent', 'leo']
   agent_count: 3
   facts_pulled: 45
   conflicts_resolved: 3
@@ -449,8 +449,8 @@ Output:
 ### Sync Specific Agents
 
 ```bash
-python3 agent_sync_adaptive.py --sync falcon katsumi
-# Syncs only falcon and katsumi, skips leo
+python3 agent_sync_adaptive.py --sync falcon hermes_agent
+# Syncs only falcon and hermes_agent, skips leo
 ```
 
 ### List Agents
@@ -460,7 +460,7 @@ python3 agent_sync_adaptive.py --agents
 # Configured Agents (3):
 #   • falcon: technical (authority=0.95)
 #     Technical expert: system architecture, implementation, code optimization
-#   • katsumi: patterns (authority=0.90)
+#   • hermes_agent: patterns (authority=0.90)
 #     Pattern expert: memory, relationships, temporal context, integration
 #   • leo: external (authority=0.75)
 #     External expert: outreach, validation, communication, social
@@ -472,7 +472,7 @@ python3 agent_sync_adaptive.py --agents
 python3 agent_sync_adaptive.py --discover
 # Discovered 3 agents:
 #   • falcon
-#   • katsumi
+#   • hermes_agent
 #   • leo
 ```
 
@@ -490,7 +490,7 @@ python3 agent_sync_adaptive.py --register nova 0.88
 python3 agent_sync_adaptive.py --status
 # Sync Status (3 agents):
 #   falcon: {last_sync: 2026-03-24T18:30:00Z, status: synced, authority: 0.95}
-#   katsumi: {last_sync: 2026-03-24T18:30:00Z, status: synced, authority: 0.90}
+#   hermes_agent: {last_sync: 2026-03-24T18:30:00Z, status: synced, authority: 0.90}
 #   leo: {last_sync: None, status: never_synced, authority: 0.75}
 ```
 
@@ -504,7 +504,7 @@ python3 agent_sync_adaptive.py --status
 # Old way (hardcoded)
 from agent_sync import AgentSynchronizer
 sync = AgentSynchronizer()
-sync.sync_agents(['falcon', 'katsumi', 'leo'])
+sync.sync_agents(['falcon', 'hermes_agent', 'leo'])
 
 # New way (config-based)
 from agent_sync_adaptive import AdaptiveAgentSynchronizer
@@ -518,7 +518,7 @@ sync.sync_all()  # Reads from agents.json
 # Consensus voting uses configured authority weights
 agent_results = {
     'falcon': 0.95,
-    'katsumi': 0.92,
+    'hermes_agent': 0.92,
     'leo': 0.88
 }
 
@@ -532,7 +532,7 @@ agent_results = {
 ```python
 # Agent specialization from config
 agent_config['falcon']['specializations']  # [architecture, implementation, ...]
-agent_config['katsumi']['specializations'] # [patterns, relationships, ...]
+agent_config['hermes_agent']['specializations'] # [patterns, relationships, ...]
 
 # Routes queries to best-fit agents automatically
 ```
@@ -546,7 +546,7 @@ agent_config['katsumi']['specializations'] # [patterns, relationships, ...]
 # Still works - uses defaults
 sync = AdaptiveAgentSynchronizer()
 sync.sync_all()
-# → Uses DEFAULT_AGENTS (falcon, katsumi, leo)
+# → Uses DEFAULT_AGENTS (falcon, hermes_agent, leo)
 ```
 
 ✅ **No Breaking Changes**:

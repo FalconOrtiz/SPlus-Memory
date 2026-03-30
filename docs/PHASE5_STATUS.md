@@ -8,7 +8,7 @@
 
 ## Overview
 
-Phase 5 implements the **Multi-Agent Coherence System** — enabling Falcon, Katsumi, and LEO to work as a unified memory and reasoning system with automatic synchronization, consensus voting, cross-agent inference, and coherence validation.
+Phase 5 implements the **Multi-Agent Coherence System** — enabling Falcon, Hermes, and LEO to work as a unified memory and reasoning system with automatic synchronization, consensus voting, cross-agent inference, and coherence validation.
 
 ### What Was Built
 
@@ -55,7 +55,7 @@ Multi-Agent Orchestrator
 | Agent | Authority | Specialization | Domain |
 |-------|-----------|-----------------|--------|
 | **Falcon** | 0.95 | Technical implementation | Systems, architecture, code |
-| **Katsumi** | 0.90 | Pattern recognition | Memory, relationships, temporal |
+| **Hermes** | 0.90 | Pattern recognition | Memory, relationships, temporal |
 | **LEO** | 0.75 | External validation | Outreach, external data, validation |
 
 ---
@@ -78,7 +78,7 @@ Keeps facts synchronized across agents.
 sync = AgentSynchronizer()
 
 # Sync all agents
-report = sync.sync_agents(['falcon', 'katsumi', 'leo'])
+report = sync.sync_agents(['falcon', 'hermes_agent', 'leo'])
 # → {facts_pulled: 27, conflicts_resolved: 3, facts_pushed: 27}
 
 # Get status
@@ -124,7 +124,7 @@ voter = ConsensusEngine()
 
 # Record votes
 voter.vote('fact_id', 'falcon', 0.95)
-voter.vote('fact_id', 'katsumi', 0.92)
+voter.vote('fact_id', 'hermes_agent', 0.92)
 voter.vote('fact_id', 'leo', 0.88)
 
 # Get consensus
@@ -156,7 +156,7 @@ Falcon:
   optimization: 0.80
   default: 0.75
 
-Katsumi:
+Hermes:
   pattern/relationship/temporal: 0.95-0.92
   context/integration: 0.90
   coordination: 0.80
@@ -334,7 +334,7 @@ status = orchestrator.get_status()
 ```sql
 agent_votes
   ├─ fact_id (FK memory_facts)
-  ├─ agent_id (falcon, katsumi, leo)
+  ├─ agent_id (falcon, hermes_agent, leo)
   ├─ confidence (0.0-1.0)
   ├─ reason (optional)
   └─ timestamp
@@ -367,7 +367,7 @@ agent_performance_log
 
 ```sql
 memory_facts additions:
-  └─ agent_id (now: 'falcon', 'katsumi', 'leo', or 'shared')
+  └─ agent_id (now: 'falcon', 'hermes_agent', 'leo', or 'shared')
 ```
 
 ---

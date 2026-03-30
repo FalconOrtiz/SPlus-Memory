@@ -159,7 +159,7 @@ class TestAgentSync(Phase5TestCase):
         
         facts = [
             ('fact1', 'Test fact 1', 0.95, 'falcon', datetime.now().isoformat()),
-            ('fact2', 'Test fact 2', 0.90, 'katsumi', datetime.now().isoformat()),
+            ('fact2', 'Test fact 2', 0.90, 'hermes_agent', datetime.now().isoformat()),
             ('fact3', 'Test fact 3', 0.85, 'leo', datetime.now().isoformat()),
         ]
         
@@ -179,7 +179,7 @@ class TestAgentSync(Phase5TestCase):
     
     def test_sync_agents(self):
         """Test synchronizing agents."""
-        report = self.sync.sync_agents(['falcon', 'katsumi', 'leo'])
+        report = self.sync.sync_agents(['falcon', 'hermes_agent', 'leo'])
         self.assertEqual(report['status'], 'complete')
         self.assertGreater(report['facts_pulled'], 0)
 
@@ -200,7 +200,7 @@ class TestConsensusEngine(Phase5TestCase):
         """Add test votes."""
         # Unanimous vote
         self.voter.vote('fact1', 'falcon', 0.95)
-        self.voter.vote('fact1', 'katsumi', 0.92)
+        self.voter.vote('fact1', 'hermes_agent', 0.92)
         self.voter.vote('fact1', 'leo', 0.88)
         
         # Disputed vote
@@ -250,7 +250,7 @@ class TestCrossAgentInference(Phase5TestCase):
         
         facts = [
             ('mem1', 'System architecture hybrid ranking', 0.95, 'falcon'),
-            ('mem2', 'Pattern recognition with windowing', 0.90, 'katsumi'),
+            ('mem2', 'Pattern recognition with windowing', 0.90, 'hermes_agent'),
             ('mem3', 'External validation complete', 0.85, 'leo'),
         ]
         
@@ -289,8 +289,8 @@ class TestCrossAgentInference(Phase5TestCase):
                 summary='Test',
                 search_time_ms=50
             ),
-            'katsumi': AgentResult(
-                agent_id='katsumi',
+            'hermes_agent': AgentResult(
+                agent_id='hermes_agent',
                 query='test',
                 results=[{'id': '2', 'confidence': 0.90}],
                 confidence=0.90,
@@ -369,7 +369,7 @@ class TestMultiAgentOrchestrator(Phase5TestCase):
         
         facts = [
             ('f1', 'Phase 5 test fact', 0.95, 'falcon'),
-            ('f2', 'Multi-agent system', 0.90, 'katsumi'),
+            ('f2', 'Multi-agent system', 0.90, 'hermes_agent'),
             ('f3', 'Coherence validation', 0.85, 'leo'),
         ]
         
@@ -416,7 +416,7 @@ class BenchmarkTests(Phase5TestCase):
         """Add larger test dataset."""
         cursor = self.orchestrator.conn.cursor()
         
-        agents = ['falcon', 'katsumi', 'leo']
+        agents = ['falcon', 'hermes_agent', 'leo']
         for i in range(30):
             agent = agents[i % 3]
             cursor.execute("""

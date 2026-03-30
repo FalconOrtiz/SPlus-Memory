@@ -11,7 +11,7 @@ Architecture:
   └──────────────┬──────────────┬───────────────┘
                  │              │
   ┌──────────────▼──┐   ┌──────▼──────────────┐
-  │  HERMES PRIVATE │   │  KATSUMI PRIVATE    │
+  │  HERMES PRIVATE │   │  HERMES PRIVATE    │
   │  Main session   │   │  Telegram persona   │
   │  Full access    │   │  Group chat rules   │
   │  System admin   │   │  Social filters     │
@@ -24,7 +24,7 @@ Scopes:
 
 Agents:
   hermes   — main CLI agent, full access
-  katsumi  — Telegram persona, social-aware
+  hermes_agent  — Telegram persona, social-aware
   leo      — outreach/sales agent
   nova     — support agent
   aria     — analytics agent
@@ -50,7 +50,7 @@ from quantum_index import QuantumIndex, ProceduralExtractor
 
 DB_PATH = Path.home() / ".hermes/memory-engine/db/memory.db"
 
-KNOWN_AGENTS = {"hermes", "katsumi", "leo", "nova", "aria"}
+KNOWN_AGENTS = {"hermes", "hermes_agent", "leo", "nova", "aria"}
 SCOPES = {"private", "shared", "sensitive"}
 
 SCHEMA_SQL = """

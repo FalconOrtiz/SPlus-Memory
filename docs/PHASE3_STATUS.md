@@ -129,7 +129,7 @@ Total: ~36 KB
 1. **Auto-embedding Generation** — Generate embeddings for new facts
 2. **Contradiction Detection** — Identify conflicting facts
 3. **Analytics Dashboard** — Memory health visualization
-4. **Multi-agent Isolation** — Falcon/Katsumi memory separation
+4. **Multi-agent Isolation** — Falcon/Hermes memory separation
 
 ### Expected Timeline
 - Mon-Tue: Auto-embeddings + contradiction detection
@@ -181,7 +181,7 @@ PHASE 4: Analytics (This week)
   → Health dashboard
   
 PHASE 5: Multi-agent (Next week)
-  → Falcon/Katsumi isolation
+  → Falcon/Hermes isolation
   → Shared fact management
   → Cross-agent coherence
 ```

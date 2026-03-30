@@ -7,7 +7,7 @@
 
 ## Overview
 
-Phase 5 enables multiple AI agents (Falcon, Katsumi, LEO, etc.) to share and reason about memory coherently:
+Phase 5 enables multiple AI agents (Falcon, Hermes, LEO, etc.) to share and reason about memory coherently:
 
 1. **Agent Synchronization** — Keep memories consistent across agents
 2. **Fact Consensus** — Resolve conflicts when agents disagree
@@ -21,7 +21,7 @@ Phase 5 enables multiple AI agents (Falcon, Katsumi, LEO, etc.) to share and rea
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  FALCON                KATSUMI               LEO             │
+│  FALCON                HERMES               LEO             │
 │  (Hub coordinator)    (Memory manager)     (Outreach)       │
 │       ↓                    ↓                    ↓            │
 │  ┌──────────────────────────────────────────────────────┐   │
@@ -158,7 +158,7 @@ class ConsensusEngine:
 Falcon sees fact_123: "Decay algorithm uses e^(-0.05*days)"
   └─ Confidence: 0.95 (from implementation)
   
-Katsumi sees fact_124: "Decay formula is exponential"
+Hermes sees fact_124: "Decay formula is exponential"
   └─ Confidence: 0.88 (from documentation)
   
 LEO sees fact_125: "Decay formula not yet verified"
@@ -183,7 +183,7 @@ class CrossAgentInference:
         
         Process:
         1. Query Falcon (implementation details)
-        2. Query Katsumi (patterns, relationships)
+        2. Query Hermes (patterns, relationships)
         3. Query LEO (external perspective)
         4. Combine findings
         5. Validate conclusion
@@ -211,7 +211,7 @@ class CrossAgentInference:
         """
         Create unified view by synthesizing all agents.
         
-        "Based on Falcon's implementation data, Katsumi's 
+        "Based on Falcon's implementation data, Hermes's 
         patterns, and LEO's feedback, the decay system..."
         """
 ```
@@ -225,7 +225,7 @@ Query Falcon (technical depth)
   ├─ Score: [0.95, 0.87, 0.78, 0.72, 0.68]
   └─ Focus: Implementation
 
-Query Katsumi (pattern recognition)
+Query Hermes (pattern recognition)
   ├─ Same query, different weights
   ├─ Score: [0.88, 0.92, 0.85, 0.70, 0.65]
   └─ Focus: Relationships
@@ -307,7 +307,7 @@ Logical Coherence:
 
 Source Coherence:
   Falcon (impl): 0.95 reliability
-  Katsumi (mgmt): 0.90 reliability
+  Hermes (mgmt): 0.90 reliability
   LEO (external): 0.75 reliability
   
   Combine weighted by reliability
@@ -322,7 +322,7 @@ class MultiAgentOrchestrator:
     def __init__(self):
         self.agents = {
             'falcon': Agent(agent_id='falcon'),
-            'katsumi': Agent(agent_id='katsumi'),
+            'hermes_agent': Agent(agent_id='hermes_agent'),
             'leo': Agent(agent_id='leo')
         }
         self.sync = AgentSynchronizer()
@@ -420,7 +420,7 @@ By end of Friday (Apr 20):
 - ✅ Consensus voting working (all agents can vote)
 - ✅ Cross-agent inference producing unified answers
 - ✅ Coherence validation detecting inconsistencies
-- ✅ Multi-agent queries working (Falcon + Katsumi + LEO)
+- ✅ Multi-agent queries working (Falcon + Hermes + LEO)
 - ✅ Conflict resolution automatic
 - ✅ All tests passing
 - ✅ Performance: <200ms for multi-agent queries
@@ -479,7 +479,7 @@ Total: ~86 KB
 **Authority**: 0.95 (implementation knowledge)
 **Scope**: System architecture, technical decisions
 
-### Katsumi
+### Hermes
 **Role**: Memory manager, pattern recognition
 **Memory Style**: Relationship-focused, holistic
 **Authority**: 0.90 (system patterns)

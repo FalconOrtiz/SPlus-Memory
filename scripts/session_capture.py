@@ -162,11 +162,11 @@ def split_into_segments(text: str) -> List[str]:
             continue
 
         # Check for speaker turns (e.g., "User:", "Assistant:", "Falcon:")
-        turns = re.split(r'\n(?=(?:User|Assistant|Human|Falcon|Hermes|Katsumi):)', para)
+        turns = re.split(r'\n(?=(?:User|Assistant|Human|Falcon|Hermes|Hermes):)', para)
         if len(turns) > 1:
             for turn in turns:
                 # Remove speaker label
-                cleaned = re.sub(r'^(?:User|Assistant|Human|Falcon|Hermes|Katsumi):\s*', '', turn.strip())
+                cleaned = re.sub(r'^(?:User|Assistant|Human|Falcon|Hermes|Hermes):\s*', '', turn.strip())
                 if cleaned:
                     segments.append(cleaned)
             continue

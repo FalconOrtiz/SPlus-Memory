@@ -7,7 +7,7 @@ Connects Hermes Memory Engine to Paperclip for agent coordination.
 Provides:
   1. Agent Status Monitoring — check what agents are doing
   2. Action Logging — log memory decisions to control plane
-  3. Agent Coordination — synchronize state with Katsumi hub
+  3. Agent Coordination — synchronize state with Hermes hub
   4. Configuration Sync — pull agent configs from Paperclip
 
 Architecture:
@@ -39,7 +39,7 @@ PAPERCLIP_API = urljoin(PAPERCLIP_BASE, "/api/")
 # Company & Agent IDs
 COMPANY_ID = os.getenv("PAPERCLIP_COMPANY_ID", "hermes-company")
 HERMES_AGENT_ID = os.getenv("HERMES_AGENT_ID", "hermes-memory-engine")
-KATSUMI_AGENT_ID = os.getenv("KATSUMI_HUB_ID", "katsumi-hub")
+HERMES_AGENT_ID = os.getenv("HERMES_HUB_ID", "hermes_agent-hub")
 
 # Auth
 API_KEY = os.getenv("PAPERCLIP_API_KEY", "")
@@ -254,11 +254,11 @@ class PaperclipBridge:
         except Exception as e:
             return {"error": str(e)}
 
-    def coordinate_with_katsumi(self, action_type: str, payload: Dict) -> bool:
+    def coordinate_with_hermes_agent(self, action_type: str, payload: Dict) -> bool:
         """
-        Notify Katsumi hub of Hermes actions.
+        Notify Hermes hub of Hermes actions.
         
-        Katsumi coordinates between:
+        Hermes coordinates between:
           • Hermes (memory)
           • LEO (outreach)
           • NOVA (execution)
@@ -277,10 +277,10 @@ class PaperclipBridge:
 
         logged = self.log_action(action)
 
-        # Notify Katsumi
+        # Notify Hermes
         self._request(
             "POST",
-            f"companies/{self.company_id}/agents/{KATSUMI_AGENT_ID}/messages",
+            f"companies/{self.company_id}/agents/{HERMES_AGENT_ID}/messages",
             {
                 "from_agent": HERMES_AGENT_ID,
                 "action": action_type,
@@ -290,11 +290,11 @@ class PaperclipBridge:
 
         return logged
 
-    def get_katsumi_config(self) -> Optional[Dict]:
-        """Get Katsumi hub configuration."""
+    def get_hermes_agent_config(self) -> Optional[Dict]:
+        """Get Hermes hub configuration."""
         return self._request(
             "GET",
-            f"companies/{self.company_id}/agents/{KATSUMI_AGENT_ID}/config",
+            f"companies/{self.company_id}/agents/{HERMES_AGENT_ID}/config",
         )
 
     def get_status(self) -> Dict:
@@ -339,7 +339,7 @@ def main():
     p.add_argument("--domains", nargs="+", default=[])
     p.add_argument("--reason", default="")
 
-    sub.add_parser("katsumi", help="Get Katsumi hub config")
+    sub.add_parser("hermes_agent", help="Get Hermes hub config")
 
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--base-url", default=PAPERCLIP_BASE)
@@ -419,12 +419,12 @@ def main():
                 print(f"  Domains: {args.domains}")
                 print(f"  Status:  {'✓' if logged else '✗'}\n")
 
-        elif args.command == "katsumi":
-            config = bridge.get_katsumi_config()
+        elif args.command == "hermes_agent":
+            config = bridge.get_hermes_agent_config()
             if args.json:
                 print(json.dumps(config, indent=2, default=str))
             else:
-                print(f"\n  KATSUMI HUB CONFIG")
+                print(f"\n  HERMES HUB CONFIG")
                 print(f"  {'═' * 50}\n")
                 if config:
                     print(json.dumps(config, indent=2, default=str))

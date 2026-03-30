@@ -73,7 +73,7 @@ collector = MetricsCollector()
 
 # Record metrics
 collector.record_query('falcon', latency_ms=85, success=True)
-collector.record_sync('katsumi', duration_ms=120, facts_synced=15, conflicts=0)
+collector.record_sync('hermes_agent', duration_ms=120, facts_synced=15, conflicts=0)
 
 # Get statistics
 stats = collector.get_query_latency_stats(minutes=60)
@@ -81,7 +81,7 @@ stats = collector.get_query_latency_stats(minutes=60)
 
 # Get per-agent accuracy
 accuracy = collector.get_agent_accuracy(minutes=60)
-# → {falcon: {votes: 150, avg_confidence: 0.94}, katsumi: {...}, leo: {...}}
+# → {falcon: {votes: 150, avg_confidence: 0.94}, hermes_agent: {...}, leo: {...}}
 
 # Get comprehensive metrics
 metrics = collector.get_metrics()
@@ -179,7 +179,7 @@ Real-time monitoring dashboard:
   AGENT STATUS
   ────────────────────────
   Falcon (Technical)      [██████████] 0.95
-  Katsumi (Patterns)      [█████████░] 0.92
+  Hermes (Patterns)      [█████████░] 0.92
   LEO (External)          [████████░░] 0.88
 
   ACTIVE ALERTS
@@ -203,7 +203,7 @@ Real-time monitoring dashboard:
   },
   "agents": {
     "falcon": {"accuracy": 0.95, "authority": 0.95},
-    "katsumi": {"accuracy": 0.92, "authority": 0.90},
+    "hermes_agent": {"accuracy": 0.92, "authority": 0.90},
     "leo": {"accuracy": 0.88, "authority": 0.75}
   },
   "status": "operational"

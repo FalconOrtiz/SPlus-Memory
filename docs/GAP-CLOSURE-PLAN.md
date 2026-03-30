@@ -173,7 +173,7 @@ profile = engine.get_profile(profile_id)
 ```
 
 #### Expected Outcomes
-- 2-5 profiles created (Falcon, Hermes, Katsumi, etc.)
+- 2-5 profiles created (Falcon, Hermes, Hermes, etc.)
 - 30+ attributes per profile
 - Dynamic context active (5-10 per profile)
 - Profile history showing attribute evolution
@@ -464,7 +464,7 @@ cp ~/.hermes/memory-engine/db/memory.db ~/.hermes/memory-engine/db/memory.db.bac
 
 Once 90% achieved:
 
-1. **Phase 6**: Multi-agent memory coherence (Hermes ↔ Katsumi)
+1. **Phase 6**: Multi-agent memory coherence (Hermes ↔ Hermes)
 2. **Phase 7**: Observability dashboard
 3. **Phase 8**: Continuous improvement loop
 

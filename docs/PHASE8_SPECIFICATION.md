@@ -3,7 +3,7 @@
 ## After Phase 7 Completion (May 17+, 2026)
 
 This phase takes the elevated Phase 7 system and makes it ready for:
-1. Multi-agent autonomous operation (Hermes ↔ Katsumi ↔ LEO)
+1. Multi-agent autonomous operation (Hermes ↔ Hermes ↔ LEO)
 2. Production deployment at scale
 3. Continuous optimization & monitoring
 4. Real-world integration with Paperclip control plane
@@ -57,7 +57,7 @@ File: phase-8a-decision-hierarchy.py (200 lines)
 
 Features:
 - Hermes as primary (tier 0)
-- Katsumi as hub (tier 1)
+- Hermes as hub (tier 1)
 - LEO as executor (tier 2)
 - Override rules + escalation
 

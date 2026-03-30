@@ -7,7 +7,7 @@ conn = sqlite3.connect(DB)
 
 DOMAIN_RULES = {
     r'stream|video|youtube|selenium|content|publicar': 'content',
-    r'agent|hermes|katsumi|leo|nova|aria': 'ai_agents',
+    r'agent|hermes|hermes_agent|leo|nova|aria': 'ai_agents',
     r'memory|memoria|capas|retrieval|embedding': 'memory_system',
     r'deploy|hosting|hostinger|vps|ssh': 'deployment',
     r'google ads|marketing|campaign|ads': 'marketing',

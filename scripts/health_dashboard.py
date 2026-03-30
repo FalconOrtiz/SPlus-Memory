@@ -175,7 +175,7 @@ class HealthDashboard:
         
         agent_names = {
             'falcon': 'Falcon (Technical)',
-            'katsumi': 'Katsumi (Patterns)',
+            'hermes_agent': 'Hermes (Patterns)',
             'leo': 'LEO (External)'
         }
         
