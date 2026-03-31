@@ -1,5 +1,7 @@
 # S+Memory
 
+![S+Memory Banner](assets/banner.png)
+
 **Layered semantic memory system for AI agents.**
 
 S+Memory gives any AI agent persistent, semantic, self-evolving memory. Works with Hermes, and any agentic system or training pipeline that needs durable context across sessions.
